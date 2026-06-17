@@ -45,6 +45,17 @@ body::before {
   mask-image: linear-gradient(180deg, #000 0, transparent 46%);
 }
 
+.is-parallax-3d {
+  transition: transform 90ms linear;
+  will-change: transform;
+}
+
+@property --spin {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -275,12 +286,19 @@ p {
 
 .hero-card {
   position: relative;
+  z-index: 1;
   padding: 26px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.96);
   color: var(--ink);
   box-shadow: 0 40px 120px rgba(0, 0, 0, 0.28);
+  transform:
+    perspective(900px)
+    translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), var(--parallax-lift, 0px))
+    rotateY(calc(-6deg + var(--parallax-rotate, 0deg)))
+    rotateX(calc(3deg - var(--parallax-rotate-micro, 0deg)));
+  transform-style: preserve-3d;
 }
 
 .hero-card::before {
@@ -291,6 +309,30 @@ p {
   border: 1px solid rgba(31, 122, 224, 0.18);
   border-radius: 50%;
   content: "";
+  transform: translateZ(-18px);
+}
+
+.hero-card::after {
+  position: absolute;
+  right: 22px;
+  bottom: 24px;
+  z-index: -1;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.94), transparent 0.8rem),
+    conic-gradient(from var(--spin), var(--blue), var(--mint), var(--amber), var(--coral), var(--blue));
+  box-shadow:
+    0 24px 70px rgba(31, 122, 224, 0.26),
+    inset -18px -22px 34px rgba(7, 17, 31, 0.28);
+  content: "";
+  opacity: 0.82;
+  transform:
+    translate3d(var(--parallax-reverse-x, 0px), var(--parallax-soft-y, 0px), -36px)
+    rotateX(64deg)
+    rotateZ(var(--parallax-rotate-negative, 0deg));
+  animation: spin-token 12s linear infinite;
 }
 
 .hero-card-header {
@@ -327,6 +369,9 @@ p {
   color: #344256;
   font-size: 0.9rem;
   font-weight: 800;
+  box-shadow:
+    0 10px 20px rgba(17, 24, 39, 0.05),
+    inset 0 -10px 16px rgba(31, 122, 224, 0.035);
 }
 
 .hero-card label {
@@ -373,10 +418,36 @@ p {
   background: var(--white);
   box-shadow: 0 24px 70px rgba(17, 24, 39, 0.08);
   overflow: hidden;
+  perspective: 1100px;
 }
 
 .proof-band div {
+  position: relative;
   padding: 28px;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(22, 199, 167, 0.16), transparent 5.8rem),
+    linear-gradient(145deg, #ffffff 0%, #eef6ff 100%);
+  transform-style: preserve-3d;
+}
+
+.proof-band div::after {
+  position: absolute;
+  top: 28px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.7), transparent),
+    linear-gradient(145deg, var(--blue), var(--mint));
+  box-shadow:
+    12px 16px 28px rgba(31, 122, 224, 0.2),
+    inset -10px -12px 16px rgba(7, 17, 31, 0.2);
+  content: "";
+  transform:
+    translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 18px)
+    rotateX(58deg)
+    rotateZ(calc(42deg + var(--parallax-rotate, 0deg)));
 }
 
 .proof-band div + div {
@@ -449,9 +520,11 @@ p {
   grid-template-columns: 1fr 64px 1fr 64px 1fr 64px 1fr;
   align-items: center;
   margin-top: 42px;
+  perspective: 1300px;
 }
 
 .engine-node {
+  position: relative;
   display: grid;
   min-height: 118px;
   padding: 18px;
@@ -463,10 +536,48 @@ p {
   box-shadow: 0 18px 45px rgba(17, 24, 39, 0.06);
   place-items: center;
   text-align: center;
+  transform:
+    translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), var(--parallax-lift, 0px))
+    rotateX(12deg)
+    rotateY(calc(-10deg + var(--parallax-rotate, 0deg)));
+  transform-style: preserve-3d;
+}
+
+.engine-node::before,
+.engine-node::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+
+.engine-node::before {
+  inset: 14px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.9), transparent 0.5rem),
+    conic-gradient(from 130deg, rgba(31, 122, 224, 0.94), rgba(22, 199, 167, 0.8), rgba(242, 184, 75, 0.72), rgba(31, 122, 224, 0.94));
+  box-shadow:
+    0 22px 42px rgba(31, 122, 224, 0.16),
+    inset -16px -18px 28px rgba(7, 17, 31, 0.22);
+  opacity: 0.2;
+  transform: translateZ(-12px) rotateX(68deg);
+}
+
+.engine-node::after {
+  inset: auto 20px -12px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(17, 24, 39, 0.16);
+  filter: blur(8px);
+  transform: translateZ(-28px);
 }
 
 .engine-node svg {
+  position: relative;
   color: var(--blue);
+  z-index: 1;
+  filter: drop-shadow(0 12px 18px rgba(31, 122, 224, 0.24));
+  transform: translateZ(28px);
 }
 
 .engine-node.active {
@@ -479,8 +590,13 @@ p {
 }
 
 .engine-line {
-  height: 2px;
+  height: 8px;
+  border-radius: 999px;
   background: linear-gradient(90deg, var(--blue), var(--mint));
+  box-shadow:
+    0 10px 20px rgba(31, 122, 224, 0.18),
+    inset 0 -3px 4px rgba(7, 17, 31, 0.22);
+  transform: rotateX(56deg);
 }
 
 .dark-section {
@@ -505,19 +621,80 @@ p {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
+  perspective: 1300px;
 }
 
 .service-card {
+  position: relative;
   min-height: 310px;
   padding: 24px;
   border: 1px solid var(--line-light);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.055);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transform:
+    translate3d(var(--parallax-soft-x, 0px), var(--parallax-soft-y, 0px), 0)
+    rotateY(var(--parallax-rotate-counter, 0deg));
 }
 
-.service-card svg {
-  margin-bottom: 34px;
-  color: var(--amber);
+.service-card::before {
+  position: absolute;
+  inset: auto 18px 18px auto;
+  width: 84px;
+  height: 84px;
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(31, 122, 224, 0.42), rgba(22, 199, 167, 0.14));
+  box-shadow:
+    0 22px 40px rgba(0, 0, 0, 0.22),
+    inset -12px -14px 20px rgba(0, 0, 0, 0.18);
+  content: "";
+  opacity: 0.44;
+  transform:
+    translate3d(var(--parallax-soft-x, 0px), var(--parallax-soft-y, 0px), 0)
+    rotateX(58deg)
+    rotateZ(calc(40deg + var(--parallax-rotate, 0deg)));
+}
+
+.service-object {
+  position: relative;
+  width: 74px;
+  height: 74px;
+  margin-bottom: 30px;
+  transform-style: preserve-3d;
+  transform:
+    translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), var(--parallax-lift, 0px))
+    rotateX(calc(10deg + var(--parallax-rotate-soft, 0deg)))
+    rotateZ(var(--parallax-rotate-object, 0deg));
+}
+
+.object-core {
+  position: absolute;
+  inset: 9px;
+  display: grid;
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.5), transparent),
+    linear-gradient(145deg, var(--blue), var(--plum));
+  box-shadow:
+    0 20px 44px rgba(31, 122, 224, 0.26),
+    inset -12px -14px 22px rgba(7, 17, 31, 0.32);
+  color: var(--white);
+  place-items: center;
+  transform: rotateX(58deg) rotateZ(42deg);
+}
+
+.object-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(22, 199, 167, 0.44);
+  border-radius: 50%;
+  box-shadow: 0 0 32px rgba(22, 199, 167, 0.18);
+  transform: rotateX(68deg) rotateZ(-18deg);
+}
+
+.service-object svg {
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.22));
 }
 
 .service-card a {
@@ -536,18 +713,65 @@ p {
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-bottom: 24px;
+  perspective: 1200px;
 }
 
 .result-card {
+  position: relative;
   min-height: 250px;
   padding: 24px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--white);
   box-shadow: 0 18px 45px rgba(17, 24, 39, 0.05);
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.metric-object {
+  position: absolute;
+  top: 24px;
+  right: 20px;
+  width: 76px;
+  height: 76px;
+  transform-style: preserve-3d;
+  transform:
+    translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), var(--parallax-lift, 0px))
+    rotateX(var(--parallax-rotate-soft, 0deg))
+    rotateZ(var(--parallax-rotate, 0deg));
+}
+
+.metric-object span {
+  position: absolute;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.9), transparent 0.6rem),
+    linear-gradient(145deg, var(--mint), var(--blue));
+  box-shadow:
+    0 22px 44px rgba(31, 122, 224, 0.18),
+    inset -12px -14px 22px rgba(7, 17, 31, 0.24);
+}
+
+.metric-object span:nth-child(1) {
+  inset: 12px;
+  transform: translateZ(22px);
+}
+
+.metric-object span:nth-child(2) {
+  inset: 3px;
+  opacity: 0.22;
+  transform: rotateX(70deg) translateZ(4px);
+}
+
+.metric-object span:nth-child(3) {
+  inset: 23px;
+  background: linear-gradient(145deg, var(--amber), var(--coral));
+  transform: translateZ(42px);
 }
 
 .result-card strong {
+  position: relative;
+  z-index: 1;
   display: block;
   margin-bottom: 28px;
   color: var(--plum);
@@ -564,6 +788,7 @@ p {
   border: 1px solid rgba(31, 122, 224, 0.2);
   border-radius: 8px;
   background: linear-gradient(135deg, #eaf5ff, #ffffff 58%, #eefcf8);
+  perspective: 1200px;
 }
 
 .case-screen {
@@ -574,6 +799,14 @@ p {
   background: #091322;
   overflow: hidden;
   grid-template-rows: 42px 1fr;
+  box-shadow:
+    0 24px 60px rgba(7, 17, 31, 0.2),
+    inset 0 0 36px rgba(31, 122, 224, 0.12);
+  transform:
+    translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), var(--parallax-lift, 0px))
+    rotateY(calc(8deg + var(--parallax-rotate, 0deg)))
+    rotateX(4deg);
+  transform-style: preserve-3d;
 }
 
 .screen-top {
@@ -604,13 +837,38 @@ p {
   align-items: flex-end;
   gap: 14px;
   padding: 28px;
+  perspective: 900px;
+  transform-style: preserve-3d;
 }
 
 .chart-bars span {
+  position: relative;
   flex: 1;
   min-width: 20px;
-  border-radius: 7px 7px 0 0;
-  background: linear-gradient(180deg, var(--mint), var(--blue));
+  border-radius: 7px 7px 2px 2px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.22), transparent 42%),
+    linear-gradient(180deg, var(--mint), var(--blue));
+  box-shadow:
+    9px 11px 0 rgba(8, 20, 35, 0.76),
+    0 18px 34px rgba(31, 122, 224, 0.24);
+  transform:
+    translate3d(var(--parallax-soft-x, 0px), var(--parallax-soft-y, 0px), var(--parallax-lift, 0px))
+    skewY(-6deg)
+    rotateX(calc(10deg + var(--parallax-rotate-soft, 0deg)))
+    rotateZ(var(--parallax-rotate-soft, 0deg));
+}
+
+.chart-bars span::after {
+  position: absolute;
+  top: 8px;
+  right: -9px;
+  bottom: -11px;
+  width: 9px;
+  border-radius: 0 7px 2px 0;
+  background: linear-gradient(180deg, #0e5fb8, #08355f);
+  content: "";
+  transform: skewY(48deg);
 }
 
 .text-link {
@@ -630,17 +888,35 @@ p {
 }
 
 .process-grid article {
+  position: relative;
   display: grid;
   grid-template-columns: 58px 0.5fr 1fr;
   gap: 18px;
   align-items: start;
   padding: 22px 0;
   border-bottom: 1px solid var(--line);
+  perspective: 900px;
 }
 
 .process-grid span {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.7), transparent),
+    linear-gradient(145deg, var(--blue), var(--plum));
   color: var(--blue);
   font-weight: 950;
+  place-items: center;
+  -webkit-text-fill-color: var(--white);
+  box-shadow:
+    10px 12px 24px rgba(31, 122, 224, 0.16),
+    inset -8px -10px 14px rgba(7, 17, 31, 0.25);
+  transform:
+    translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0)
+    rotateX(58deg)
+    rotateZ(calc(40deg + var(--parallax-rotate, 0deg)));
 }
 
 .process-grid p {
@@ -659,11 +935,33 @@ p {
 }
 
 .market-row {
+  position: relative;
   display: grid;
   grid-template-columns: 54px minmax(130px, 0.45fr) 1fr;
   gap: 18px;
   padding: 20px 0;
   border-bottom: 1px solid var(--line);
+}
+
+.market-row::after {
+  position: absolute;
+  top: 18px;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.95), transparent 0.44rem),
+    linear-gradient(145deg, var(--mint), var(--blue));
+  box-shadow:
+    8px 12px 24px rgba(31, 122, 224, 0.16),
+    inset -8px -10px 14px rgba(7, 17, 31, 0.22);
+  content: "";
+  opacity: 0.82;
+  transform:
+    translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0)
+    rotateX(58deg)
+    rotateZ(var(--parallax-rotate, 0deg));
 }
 
 .market-row span {
@@ -692,18 +990,52 @@ p {
 }
 
 .contact-card {
+  position: relative;
   display: grid;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #0b1424;
   color: var(--white);
+  overflow: hidden;
+  transform:
+    perspective(900px)
+    translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), var(--parallax-lift, 0px))
+    rotateY(calc(6deg + var(--parallax-rotate, 0deg)))
+    rotateX(2deg);
+  transform-style: preserve-3d;
+}
+
+.contact-card::before {
+  position: absolute;
+  right: -32px;
+  bottom: -46px;
+  width: 160px;
+  height: 160px;
+  border-radius: 42px;
+  background: linear-gradient(145deg, rgba(31, 122, 224, 0.76), rgba(124, 58, 237, 0.28));
+  box-shadow:
+    0 28px 70px rgba(31, 122, 224, 0.28),
+    inset -20px -24px 36px rgba(0, 0, 0, 0.24);
+  content: "";
+  transform:
+    translate3d(var(--parallax-soft-x, 0px), var(--parallax-soft-y, 0px), 0)
+    rotateX(58deg)
+    rotateZ(calc(42deg + var(--parallax-rotate, 0deg)));
 }
 
 .contact-card a,
 .contact-card span {
+  position: relative;
+  z-index: 1;
   min-height: 58px;
   padding: 16px 18px;
   color: #dfe7f2;
+}
+
+@keyframes spin-token {
+  to {
+    --spin: 360deg;
+  }
 }
 
 .contact-card a + a,
@@ -717,6 +1049,7 @@ p {
 }
 
 .footer-main {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(260px, 1.05fr) minmax(320px, 0.95fr) minmax(260px, 0.75fr);
   gap: 42px;
@@ -727,15 +1060,40 @@ p {
     radial-gradient(circle at 92% 12%, rgba(31, 122, 224, 0.12), transparent 22rem),
     #ffffff;
   box-shadow: 0 24px 70px rgba(17, 24, 39, 0.08);
+  overflow: hidden;
+}
+
+.footer-main::after {
+  position: absolute;
+  right: 38px;
+  bottom: -48px;
+  width: 180px;
+  height: 180px;
+  border-radius: 46px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.56), transparent),
+    linear-gradient(145deg, rgba(31, 122, 224, 0.28), rgba(22, 199, 167, 0.18));
+  box-shadow:
+    0 28px 70px rgba(31, 122, 224, 0.14),
+    inset -20px -24px 34px rgba(7, 17, 31, 0.12);
+  content: "";
+  transform:
+    translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0)
+    rotateX(58deg)
+    rotateZ(calc(42deg + var(--parallax-rotate, 0deg)));
 }
 
 .footer-brand p,
 .footer-cta p {
+  position: relative;
+  z-index: 1;
   max-width: 420px;
   margin: 20px 0 0;
 }
 
 .footer-links {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 28px;
@@ -762,6 +1120,8 @@ p {
 }
 
 .footer-cta {
+  position: relative;
+  z-index: 1;
   display: grid;
   align-content: start;
 }
@@ -911,6 +1271,7 @@ p {
     width: 2px;
     height: 34px;
     margin: 0 auto;
+    transform: rotateX(0deg);
   }
 
   .process-grid article {
@@ -955,6 +1316,36 @@ p {
     padding: 118px 16px 58px;
   }
 
+  .hero-card {
+    transform:
+      perspective(780px)
+      translate3d(var(--parallax-soft-x, 0px), var(--parallax-soft-y, 0px), 0)
+      rotateY(var(--parallax-rotate-mobile, 0deg))
+      rotateX(var(--parallax-rotate-micro-negative, 0deg));
+  }
+
+  .case-screen,
+  .contact-card {
+    transform:
+      perspective(780px)
+      translate3d(var(--parallax-soft-x, 0px), var(--parallax-soft-y, 0px), 0)
+      rotateY(var(--parallax-rotate-soft, 0deg));
+  }
+
+  .hero-card::after,
+  .metric-object,
+  .market-row::after,
+  .footer-main::after {
+    opacity: 0.34;
+  }
+
+  .engine-node {
+    transform:
+      translate3d(var(--parallax-soft-x, 0px), var(--parallax-soft-y, 0px), 0)
+      rotateX(6deg)
+      rotateY(calc(-5deg + var(--parallax-rotate-soft, 0deg)));
+  }
+
   h1 {
     font-size: clamp(3rem, 16vw, 4.8rem);
   }
@@ -997,6 +1388,7 @@ p {
 
   .market-row {
     grid-template-columns: 42px 1fr;
+    padding-right: 42px;
   }
 
   .market-row p {
@@ -1027,5 +1419,11 @@ p {
 
   .footer-bottom {
     display: grid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-card::after {
+    animation: none;
   }
 }

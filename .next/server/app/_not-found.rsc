@@ -1,5 +1,5 @@
-1:HL["/_next/static/css/95663685c5036822.css","style",{"crossOrigin":""}]
-0:["rUqtAr6pF75AXs4EhkEO6",[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],"$L2",[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/95663685c5036822.css","precedence":"next","crossOrigin":""}]],"$L3"]]]]
+1:HL["/_next/static/css/41b8824cdcfeb5f4.css","style",{"crossOrigin":""}]
+0:["9PeFEdZiqv_xXUyx-nnJA",[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],"$L2",[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/41b8824cdcfeb5f4.css","precedence":"next","crossOrigin":""}]],"$L3"]]]]
 4:I[6954,[],""]
 5:I[7264,[],""]
 3:[["$","meta","0",{"charSet":"utf-8"}],["$","title","1",{"children":"Matlaus | Global Marketing Company"}],["$","meta","2",{"name":"description","content":"Matlaus is a global marketing company serving ambitious brands across Europe, Asia, the Middle East, and high-opportunity markets."}],["$","meta","3",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]

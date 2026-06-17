@@ -15,6 +15,7 @@ import {
   Target,
   Users2,
 } from "lucide-react";
+import ScrollParallax3D from "./ScrollParallax3D";
 
 const services = [
   {
@@ -95,6 +96,7 @@ const proofItems = [
 export default function Home() {
   return (
     <main>
+      <ScrollParallax3D />
       <header className="site-header">
         <a className="brand" href="#" aria-label="Matlaus home">
           <img className="logo-mark" src="/logo_light.png" alt="" />
@@ -239,7 +241,12 @@ export default function Home() {
         <div className="service-grid">
           {services.map((service) => (
             <article className="service-card" key={service.title}>
-              <service.icon size={25} />
+              <div className="service-object" aria-hidden="true">
+                <span className="object-core">
+                  <service.icon size={25} />
+                </span>
+                <span className="object-ring" />
+              </div>
               <h3>{service.title}</h3>
               <p>{service.text}</p>
               <a href="#contact">
@@ -263,6 +270,11 @@ export default function Home() {
         <div className="result-grid">
           {results.map((result) => (
             <article className="result-card" key={result.metric}>
+              <div className="metric-object" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </div>
               <strong>{result.metric}</strong>
               <h3>{result.label}</h3>
               <p>{result.detail}</p>
