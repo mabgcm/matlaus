@@ -313,26 +313,7 @@ p {
 }
 
 .hero-card::after {
-  position: absolute;
-  right: 22px;
-  bottom: 24px;
-  z-index: -1;
-  width: 128px;
-  height: 128px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.94), transparent 0.8rem),
-    conic-gradient(from var(--spin), var(--blue), var(--mint), var(--amber), var(--coral), var(--blue));
-  box-shadow:
-    0 24px 70px rgba(31, 122, 224, 0.26),
-    inset -18px -22px 34px rgba(7, 17, 31, 0.28);
-  content: "";
-  opacity: 0.82;
-  transform:
-    translate3d(var(--parallax-reverse-x, 0px), var(--parallax-soft-y, 0px), -36px)
-    rotateX(64deg)
-    rotateZ(var(--parallax-rotate-negative, 0deg));
-  animation: spin-token 12s linear infinite;
+  display: none;
 }
 
 .hero-card-header {
@@ -360,7 +341,11 @@ p {
   margin-bottom: 22px;
 }
 
-.choice-grid span {
+.choice-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
   min-height: 46px;
   padding: 13px 12px;
   border: 1px solid var(--line);
@@ -369,9 +354,34 @@ p {
   color: #344256;
   font-size: 0.9rem;
   font-weight: 800;
+  text-align: left;
+  cursor: pointer;
   box-shadow:
     0 10px 20px rgba(17, 24, 39, 0.05),
     inset 0 -10px 16px rgba(31, 122, 224, 0.035);
+}
+
+.choice-option svg {
+  flex: 0 0 auto;
+  color: #9aa8ba;
+}
+
+.choice-option.is-selected {
+  border-color: rgba(31, 122, 224, 0.42);
+  background: #eaf5ff;
+  color: var(--blue-strong);
+  box-shadow:
+    0 14px 28px rgba(31, 122, 224, 0.12),
+    inset 0 -10px 16px rgba(31, 122, 224, 0.06);
+}
+
+.choice-option.is-selected svg {
+  color: var(--mint);
+}
+
+.choice-option:focus-visible {
+  outline: 3px solid rgba(31, 122, 224, 0.26);
+  outline-offset: 2px;
 }
 
 .hero-card label {
@@ -423,31 +433,65 @@ p {
 
 .proof-band div {
   position: relative;
-  padding: 28px;
+  min-height: 136px;
+  padding: 30px 126px 28px 30px;
   background:
     radial-gradient(circle at 82% 18%, rgba(22, 199, 167, 0.16), transparent 5.8rem),
     linear-gradient(145deg, #ffffff 0%, #eef6ff 100%);
   transform-style: preserve-3d;
 }
 
-.proof-band div::after {
+.proof-logo {
   position: absolute;
-  top: 28px;
-  right: 24px;
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  top: 50%;
+  right: 32px;
+  z-index: 1;
+  display: grid;
+  width: 70px;
+  height: 70px;
+  padding: 10px;
+  border: 1px solid rgba(31, 122, 224, 0.14);
+  border-radius: 18px;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.7), transparent),
-    linear-gradient(145deg, var(--blue), var(--mint));
+    linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(238, 246, 255, 0.68)),
+    radial-gradient(circle at 30% 20%, rgba(31, 122, 224, 0.18), transparent 34px);
   box-shadow:
-    12px 16px 28px rgba(31, 122, 224, 0.2),
-    inset -10px -12px 16px rgba(7, 17, 31, 0.2);
-  content: "";
+    0 20px 38px rgba(31, 122, 224, 0.18),
+    inset -10px -12px 20px rgba(7, 17, 31, 0.08),
+    inset 8px 8px 18px rgba(255, 255, 255, 0.72);
+  place-items: center;
   transform:
-    translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 18px)
-    rotateX(58deg)
-    rotateZ(calc(42deg + var(--parallax-rotate, 0deg)));
+    translate3d(var(--parallax-soft-x, 0px), calc(-50% + var(--parallax-soft-y, 0px)), var(--parallax-lift, 0px))
+    rotateX(18deg)
+    rotateY(calc(var(--parallax-spin, 0deg) + 16deg))
+    rotateZ(var(--parallax-rotate-soft, 0deg));
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.proof-logo::after {
+  position: absolute;
+  right: 5px;
+  bottom: -13px;
+  left: 5px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(31, 122, 224, 0.14);
+  content: "";
+  filter: blur(10px);
+  transform: translateZ(-28px);
+}
+
+.proof-logo img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 10px 16px rgba(69, 30, 200, 0.24))
+    drop-shadow(0 2px 0 rgba(255, 255, 255, 0.3));
+  transform: translateZ(20px);
 }
 
 .proof-band div + div {
@@ -455,6 +499,8 @@ p {
 }
 
 .proof-band strong {
+  position: relative;
+  z-index: 1;
   display: block;
   margin-bottom: 8px;
   color: var(--blue);
@@ -463,8 +509,14 @@ p {
 }
 
 .proof-band span {
+  position: relative;
+  z-index: 1;
   color: var(--muted);
   font-weight: 800;
+}
+
+.proof-band span.proof-logo {
+  color: inherit;
 }
 
 .section,
@@ -1140,6 +1192,105 @@ p {
   font-size: 0.92rem;
 }
 
+/* Flatten all decorative 3D assets except the hero form and Example brief chart. */
+.proof-band {
+  perspective: none;
+}
+
+.proof-band div,
+.engine-node,
+.service-card,
+.service-object,
+.result-card,
+.process-grid span,
+.market-row,
+.contact-card,
+.footer-main {
+  transform: none;
+  transform-style: flat;
+}
+
+.proof-logo {
+  top: 28px;
+  right: 28px;
+  width: 48px;
+  height: 48px;
+  padding: 7px;
+  border-radius: 12px;
+  background: transparent;
+  border-color: rgba(31, 122, 224, 0.1);
+  box-shadow: none;
+  transform: none;
+}
+
+.proof-logo::after,
+.engine-node::before,
+.engine-node::after,
+.service-card::before,
+.object-ring,
+.metric-object,
+.market-row::after,
+.contact-card::before,
+.footer-main::after {
+  display: none;
+}
+
+.proof-logo img {
+  filter: none;
+  transform: none;
+}
+
+.engine-visual,
+.service-grid,
+.result-grid,
+.process-grid article {
+  perspective: none;
+}
+
+.engine-node {
+  box-shadow: 0 12px 30px rgba(17, 24, 39, 0.06);
+}
+
+.engine-node svg,
+.object-core {
+  filter: none;
+  transform: none;
+}
+
+.engine-line {
+  height: 2px;
+  box-shadow: none;
+  transform: none;
+}
+
+.service-card {
+  overflow: hidden;
+}
+
+.service-object {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 28px;
+}
+
+.object-core {
+  inset: 0;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.process-grid span {
+  box-shadow: none;
+}
+
+.market-row {
+  padding-right: 0;
+}
+
+.contact-card {
+  box-shadow: 0 18px 45px rgba(17, 24, 39, 0.08);
+}
+
 .site-footer .brand {
   color: var(--ink);
 }
@@ -1372,6 +1523,19 @@ p {
     border-left: 0;
   }
 
+  .proof-band div {
+    min-height: 124px;
+    padding: 24px 92px 24px 24px;
+  }
+
+  .proof-logo {
+    right: 24px;
+    width: 54px;
+    height: 54px;
+    padding: 8px;
+    border-radius: 15px;
+  }
+
   .section,
   .results-section,
   .method-section,
@@ -1426,4 +1590,51 @@ p {
   .hero-card::after {
     animation: none;
   }
+}
+
+.engine-node,
+.service-card,
+.service-object,
+.result-card,
+.process-grid span,
+.market-row,
+.contact-card,
+.footer-main {
+  transform: none;
+  transform-style: flat;
+}
+
+.engine-node::before,
+.engine-node::after,
+.service-card::before,
+.object-ring,
+.metric-object,
+.market-row::after,
+.contact-card::before,
+.footer-main::after {
+  display: none;
+}
+
+.engine-node svg,
+.object-core,
+.proof-logo,
+.proof-logo img {
+  transform: none;
+}
+
+.proof-band span.proof-logo {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  z-index: 1;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  padding: 7px;
+  color: inherit;
+  place-items: center;
+}
+
+.market-row {
+  padding-right: 0;
 }

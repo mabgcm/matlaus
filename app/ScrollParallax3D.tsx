@@ -4,17 +4,8 @@ import { useEffect } from "react";
 
 const PARALLAX_SELECTOR = [
   ".hero-card",
-  ".proof-band > div",
-  ".engine-node",
-  ".service-card",
-  ".service-object",
-  ".metric-object",
   ".case-screen",
   ".chart-bars span",
-  ".process-grid span",
-  ".market-row",
-  ".contact-card",
-  ".footer-main",
 ].join(",");
 
 export default function ScrollParallax3D() {
@@ -47,6 +38,7 @@ export default function ScrollParallax3D() {
         const x = clamped * 34 * direction * depth * motionScale;
         const y = clamped * -86 * depth * motionScale;
         const rotate = clamped * 16 * direction * motionScale;
+        const spin = clamped * 240 * direction * motionScale;
 
         element.style.setProperty("--parallax-y", `${y}px`);
         element.style.setProperty("--parallax-x", `${x}px`);
@@ -62,6 +54,7 @@ export default function ScrollParallax3D() {
         element.style.setProperty("--parallax-rotate-negative", `${rotate * -1}deg`);
         element.style.setProperty("--parallax-rotate-counter", `${rotate * -0.32}deg`);
         element.style.setProperty("--parallax-rotate-object", `${rotate * 1.1}deg`);
+        element.style.setProperty("--parallax-spin", `${spin}deg`);
         element.style.setProperty("--parallax-lift", `${Math.abs(clamped) * 42 * depth}px`);
       });
     };
@@ -104,6 +97,7 @@ export default function ScrollParallax3D() {
         element.style.removeProperty("--parallax-rotate-negative");
         element.style.removeProperty("--parallax-rotate-counter");
         element.style.removeProperty("--parallax-rotate-object");
+        element.style.removeProperty("--parallax-spin");
         element.style.removeProperty("--parallax-lift");
       });
     };

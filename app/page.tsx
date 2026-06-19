@@ -15,6 +15,7 @@ import {
   Target,
   Users2,
 } from "lucide-react";
+import HeroBriefForm from "./HeroBriefForm";
 import ScrollParallax3D from "./ScrollParallax3D";
 
 const services = [
@@ -38,15 +39,6 @@ const services = [
     title: "Conversion optimization",
     text: "Analytics, landing page iteration, CRM handoff, and reporting rhythms that turn traffic into measurable decisions.",
   },
-];
-
-const serviceChoices = [
-  "Go-to-market strategy",
-  "Paid media",
-  "SEO and content",
-  "Creative",
-  "Analytics",
-  "International expansion",
 ];
 
 const results = [
@@ -158,39 +150,30 @@ export default function Home() {
           </div>
         </div>
 
-        <aside className="hero-card" aria-label="Campaign planning form preview">
-          <div className="hero-card-header">
-            <span>Growth brief</span>
-            <strong>48 hr response</strong>
-          </div>
-          <h2>Where should we focus first?</h2>
-          <div className="choice-grid">
-            {serviceChoices.map((choice) => (
-              <span key={choice}>{choice}</span>
-            ))}
-          </div>
-          <label htmlFor="website">Website or market goal</label>
-          <div className="input-row">
-            <input id="website" type="text" placeholder="example.com / new region" />
-            <button type="button" aria-label="Submit growth brief">
-              <ArrowRight size={18} />
-            </button>
-          </div>
-        </aside>
+        <HeroBriefForm />
       </section>
 
       <section className="proof-band" aria-label="Company highlights">
         <div>
           <strong>01</strong>
           <span>senior strategy partner</span>
+          <span className="proof-logo" aria-hidden="true">
+            <img src="/logo_light.png" alt="" />
+          </span>
         </div>
         <div>
           <strong>06</strong>
           <span>priority global market lanes</span>
+          <span className="proof-logo" aria-hidden="true">
+            <img src="/logo_light.png" alt="" />
+          </span>
         </div>
         <div>
           <strong>360</strong>
           <span>view from search to sales handoff</span>
+          <span className="proof-logo" aria-hidden="true">
+            <img src="/logo_light.png" alt="" />
+          </span>
         </div>
       </section>
 
